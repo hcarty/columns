@@ -1,0 +1,23 @@
+(* Added by OPAM. *)
+let () =
+  try Topdirs.dir_directory (Sys.getenv "OCAML_TOPLEVEL_PATH")
+  with Not_found -> ()
+;;
+
+(* Put this in ~/.ocamlinit to be able to toggle requiring ;; on and off *)
+ 
+let toggle_semi =
+  let original = !UTop.parse_toplevel_phrase in
+  let no_semi str eos_is_error = original (str ^ ";;") eos_is_error in
+  let semi = ref true in
+  fun () ->
+    UTop.parse_toplevel_phrase := if !semi then no_semi else original;
+    semi := not !semi
+;;
+(* Include this line to not require ;; by default *)
+toggle_semi ();;
+#directory "_build";;
+#require "csv";;
+#load "columns.cma";;
+#install_printer Columns.Col.pp_elt;;
+#install_printer Columns.Col.pp;;
