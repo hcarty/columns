@@ -146,6 +146,19 @@ module Frame = struct
         Col.get frame.data.(col_i) row_i
     )
 
+  let get_row_map frame row =
+    let row_i = String_map.find row frame.rows_map in
+    let a =
+      Array.init (Array.length frame.columns) (
+        fun col_i ->
+          col_i, Col.get frame.data.(col_i) row_i
+      )
+    in
+    Array.fold_left (
+      fun map (i, elt) ->
+        String_map.add frame.columns.(i) elt map
+    ) String_map.empty a
+
   let geti frame (row_i, col_i) =
     let col = frame.data.(col_i) in
     Col.get col row_i
