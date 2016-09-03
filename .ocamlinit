@@ -18,6 +18,7 @@ let toggle_semi =
 toggle_semi ();;
 #directory "_build";;
 #require "csv";;
+#require "fmt";;
 #load "columns.cma";;
 #install_printer Columns.Col.pp_elt;;
 #install_printer Columns.Col.pp;;

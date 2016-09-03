@@ -58,19 +58,16 @@ module Col = struct
 
   let pp_elt fmt (e : elt_t) =
     match e with
-    | String s -> Format.pp_print_string fmt s
-    | Int i -> Format.pp_print_int fmt i
-    | Float f -> Format.pp_print_float fmt f
+    | String s -> Fmt.string fmt s
+    | Int i -> Fmt.int fmt i
+    | Float f -> Fmt.float fmt f
 
   let pp fmt c =
-    let pp_sep fmt () = Format.pp_print_char fmt ' ' in
+    let sep fmt () = Fmt.char fmt ' ' in
     match c with
-    | String sl ->
-      Format.pp_print_list ~pp_sep Format.pp_print_string fmt (Array.to_list sl)
-    | Int il ->
-      Format.pp_print_list ~pp_sep Format.pp_print_int fmt (Array.to_list il)
-    | Float fl ->
-      Format.pp_print_list ~pp_sep Format.pp_print_float fmt (Array.to_list fl)
+    | String sl -> Fmt.array ~sep Fmt.string fmt sl
+    | Int il -> Fmt.array ~sep Fmt.int fmt il
+    | Float fl -> Fmt.array ~sep Fmt.float fmt fl
 end
 
 module Frame = struct

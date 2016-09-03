@@ -1,1 +1,1 @@
-true: debug, package(csv)
+true: debug, package(csv), package(fmt)
